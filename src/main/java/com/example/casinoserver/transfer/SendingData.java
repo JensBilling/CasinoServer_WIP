@@ -74,4 +74,9 @@ public class SendingData {
     public void setWinner(String winner) {
         this.winner = winner;
     }
+
+    public void addToHouseCards(String s) {
+        this.houseCards.add(s);
+        this.houseValue = GameLogicMethods.getHouseCardValue(this);
+    }
 }

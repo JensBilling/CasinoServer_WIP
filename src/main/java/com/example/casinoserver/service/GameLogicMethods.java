@@ -166,4 +166,39 @@ public class GameLogicMethods {
 
         return filledPlayerHand;
     }
+
+    public static SendingData calculateWinner(String gameId, ArrayList<String> houseCards, ArrayList<String> playerCards, Optional<BlackJackShuffleLog> completeShuffledDeck) {
+        SendingData sendingDataObject = new SendingData(gameId, houseCards, playerCards);
+
+        if (sendingDataObject.getWinner().equals("0")){
+            if (sendingDataObject.getHouseValue() < 17) {
+                sendingDataObject.setHouseCards(houseDrawCards(sendingDataObject, completeShuffledDeck));
+            }
+
+            if (sendingDataObject.getHouseValue() > 21){
+                sendingDataObject.setWinner("Player");
+            } else if (sendingDataObject.getPlayerValue() > sendingDataObject.getHouseValue()){
+                sendingDataObject.setWinner("Player");
+            } else if (sendingDataObject.getPlayerValue() < sendingDataObject.getHouseValue()){
+                sendingDataObject.setWinner("House");
+            } else if (sendingDataObject.getPlayerValue() == sendingDataObject.getHouseValue()){
+                sendingDataObject.setWinner("Push");
+            }
+        }
+
+        return sendingDataObject;
+    }
+
+    private static ArrayList<String> houseDrawCards(SendingData sendingDataObject, Optional<BlackJackShuffleLog> completeShuffledDeck) {
+        int drawnCardsAmount = sendingDataObject.getHouseCards().size() + sendingDataObject.getPlayerCards().size() - 2;
+        int houseCardsValue = sendingDataObject.getHouseValue();
+
+        for (int i = houseCardsValue; i < 17; i = sendingDataObject.getHouseValue()) {
+            ArrayList<String> remainingDeck = getRemainingDeck(completeShuffledDeck, drawnCardsAmount);
+            sendingDataObject.addToHouseCards(remainingDeck.get(0));
+            sendingDataObject.setHouseValue(sendingDataObject.getHouseValue());
+            drawnCardsAmount++;
+        }
+        return sendingDataObject.getHouseCards();
+    }
 }

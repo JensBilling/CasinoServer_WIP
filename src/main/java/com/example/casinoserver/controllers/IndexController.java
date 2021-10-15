@@ -71,12 +71,17 @@ public class IndexController {
     public SendingData standMethod(@RequestBody ReceiveData receiveDataObject){
         receiveDataObject.setPlayerHit(false);
         int playerCardCount = receiveDataObject.getCardsInHand();
+
         Optional<BlackJackShuffleLog> completeShuffledDeck = blackJackShuffleLogRepository.findById(receiveDataObject.getGameId());
 
-        ArrayList<String> playerCards = GameLogicMethods.fillPlayerHand(receiveDataObject.getCardsInHand(), completeShuffledDeck);
+        ArrayList<String> playerCards = GameLogicMethods.fillPlayerHand(playerCardCount, completeShuffledDeck);
         ArrayList<String> houseCards = new ArrayList<>(Arrays.asList(completeShuffledDeck.get().getCard2(), completeShuffledDeck.get().getCard4()));
-        ArrayList<String> firstHouseCard = new ArrayList<>(Arrays.asList(houseCards.get(0)));
 
-        return null;
+        SendingData sendingDataObject = GameLogicMethods.calculateWinner(receiveDataObject.getGameId(), houseCards, playerCards, completeShuffledDeck);
+
+
+
+
+        return sendingDataObject;
     }
 }
