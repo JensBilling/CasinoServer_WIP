@@ -12,6 +12,8 @@ import com.example.casinoserver.transfer.SendingData;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
@@ -42,7 +44,7 @@ public class IndexController {
 
     // Start new game
     @PostMapping("/start")
-    public SendingData startMethod(@RequestBody ReceiveUserBet userBet) {
+    public SendingData startMethod(@RequestBody ReceiveUserBet userBet, HttpServletRequest request) {
         int gameUserId = userBet.getUserId();
         int gameUserBet = userBet.getUserBet();
 
@@ -82,7 +84,7 @@ public class IndexController {
         GameLog gameLog = new GameLog();
         gameLog.setGameId(gameId);
         gameLog.setPlayerBet(gameUserBet);
-        gameLog.setPlayerIpAddress("ip-place-holder");
+        gameLog.setPlayerIpAddress(request.getRemoteAddr());
         gameLog.setUserId(userRepository.getById(gameUserId).getUserId());
         gameLog.setGamePhase("Game started");
         gameLog.setPlayerCards(playerCardsAsString);
