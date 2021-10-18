@@ -9,21 +9,21 @@ import javax.persistence.Id;
 public class GameLog {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int gameId;
-    private String userName;
+    private String gameId;
+    private int userId;
     private String houseCards;
     private String playerCards;
     private int playerBet;
     private int playerBalanceChange;
     private String playerIpAddress;
+    private String gamePhase;
 
     public GameLog() {
     }
 
-    public GameLog(int gameId, String userName, String houseCards, String playerCards, int playerBet, int playerBalanceChange, String playerIpAddress) {
+    public GameLog(String gameId, int userId, String houseCards, String playerCards, int playerBet, int playerBalanceChange, String playerIpAddress) {
         this.gameId = gameId;
-        this.userName = userName;
+        this.userId = userId;
         this.houseCards = houseCards;
         this.playerCards = playerCards;
         this.playerBet = playerBet;
@@ -31,20 +31,20 @@ public class GameLog {
         this.playerIpAddress = playerIpAddress;
     }
 
-    public int getGameId() {
+    public String getGameId() {
         return gameId;
     }
 
-    public void setGameId(int gameId) {
+    public void setGameId(String gameId) {
         this.gameId = gameId;
     }
 
-    public String getUserName() {
-        return userName;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getHouseCards() {
@@ -85,5 +85,13 @@ public class GameLog {
 
     public void setPlayerIpAddress(String playerIpAddress) {
         this.playerIpAddress = playerIpAddress;
+    }
+
+    public String getGamePhase() {
+        return gamePhase;
+    }
+
+    public void setGamePhase(String gamePhase) {
+        this.gamePhase = gamePhase;
     }
 }
