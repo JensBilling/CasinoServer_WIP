@@ -9,6 +9,7 @@ import com.example.casinoserver.service.GameLogicMethods;
 import com.example.casinoserver.transfer.ReceiveData;
 import com.example.casinoserver.transfer.ReceiveUserBet;
 import com.example.casinoserver.transfer.SendingData;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,6 +44,7 @@ public class IndexController {
     }
 
     // Start new game
+    @CrossOrigin
     @PostMapping("/start")
     public SendingData startMethod(@RequestBody ReceiveUserBet userBet, HttpServletRequest request) {
         int gameUserId = userBet.getUserId();
@@ -122,6 +124,7 @@ public class IndexController {
     }
 
     // Hit
+    @CrossOrigin
     @PostMapping("/hit")
     public SendingData hitMethod(@RequestBody ReceiveData receiveDataObject) {
         // Find deck shuffle in DB
@@ -204,6 +207,7 @@ public class IndexController {
     }
 
     // Stand
+    @CrossOrigin
     @PostMapping("/stand")
     public SendingData standMethod(@RequestBody ReceiveData receiveDataObject){
         receiveDataObject.setPlayerHit(false);
